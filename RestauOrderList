@@ -1,0 +1,62 @@
+fun main() {
+    val order1 =Order(1)
+    order1.addItems(Vegetables())
+    order1.printItemsInfos()
+    
+    val order2 =Order(2)
+    order2.addItems(Noodles())
+    order2.printItemsInfos()
+    
+    val order3 =Order(3)
+    order3.addItems(Vegetables(listOf("Cabbage" ,"Onions")))
+    order3.printItemsInfos()
+   
+    val order4 =Order(4)
+    val items =listOf(Noodles() ,Vegetables(listOf("Sprouts" ,"Beans")))
+    order4.addAllItems(items)
+    order4.printItemsInfos()
+    
+}
+open class Items(val name:String ,var price:Int) 
+
+class Order(val orderNum:Int){
+    private val itemList :MutableList<Items> =mutableListOf()
+    
+    fun addItems(newItem :Items){
+        itemList.add(newItem)
+    }
+    
+    fun addAllItems(newItems :List<Items>){
+        itemList.addAll(newItems)
+    }
+    
+    fun printItemsInfos(){
+        println("Order number :#$orderNum")
+        var total =0
+        for(item in itemList){
+            println("$item :${item.price}")
+            total+=item.price
+        }
+        println("Total :$$total")
+        println()
+    } 
+
+
+}
+
+class Vegetables(vararg val toppings:List<String>) :Items("Vegetables" ,10){
+     
+    override fun toString(): String {
+         if(toppings.isEmpty()){
+             return "$name Chef's choice"
+         }else{
+             return name +" "+toppings.joinToString()
+         }
+     }
+}
+
+class Noodles :Items("Noodles" ,15){
+     override fun toString(): String {
+       return name
+   }
+}
