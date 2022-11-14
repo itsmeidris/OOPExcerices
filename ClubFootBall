@@ -1,0 +1,103 @@
+fun main() {
+    val j1 =Joueur(123 ,"Edris" ,"Loulidi" ,2002 ,2)    
+    val j2 =Joueur(321 ,"Adam" ,"Amenzou" ,2002 ,8)    
+    val j3 =Joueur(456 ,"Ussama" ,"Atmani" ,1999 ,9)   
+    val j4 =Joueur(789 ,"Amin" ,"Sarrar" ,2001 ,10)
+    val j5 =Joueur(488 ,"Walid" ,"Bro" ,2003 ,4)    
+    val j6 =Joueur(488 ,"Ayman" ,"Sarrar" ,2001 ,99) 
+    val j7 =Joueur(568 ,"CHEUUI" ,"uhdiue" ,4966 ,2)
+
+    val c1 =Coach(999 ,"Said" ,"Loulidi" ,1956 ,25)
+  
+    var eq =Equipe("Achbal Hay Rahma" ,"Marocaine" ,c1 ,mutableListOf())
+    eq.ajouterJoueur(j1)
+    eq.ajouterJoueur(j2)
+    eq.ajouterJoueur(j3)
+    eq.ajouterJoueur(j4)
+    eq.ajouterJoueur(j5)
+    eq.ajouterJoueur(j6)
+    
+    eq.supprimerJoueur(j6)
+    
+    println()
+    eq.afficherJoueurParNum(10)
+    println(eq.afficherNbrJoueur())
+    println(eq.afficherEqInfos())
+    println()
+   
+}
+open class Personne(var code:Int ,var nom:String ,var prenom:String ,var dateN:Int){
+    open fun afficherInfos():String{
+        return "Nom :$nom \nPrenom :$prenom \nCode :$code \nDate Naissance :$dateN"        
+    }
+    
+}
+
+class Joueur(code:Int ,nom:String ,prenom:String ,dateN:Int ,var numero:Int) :Personne(code ,nom ,prenom ,dateN){
+    fun afficherJoueurInfos():String{
+        return "${super.afficherInfos()} \nNumero :$numero"
+    } 
+    override fun toString():String{
+        return nom +" "+prenom
+    }
+    
+}
+
+class Coach(code:Int ,nom:String ,prenom:String ,dateN:Int ,var nbrExp:Int) :Personne(code ,nom ,prenom ,dateN){
+    fun afficherCoachInfos():String{
+        return "${super.afficherInfos()} \nAnnees d'experience :$nbrExp "
+    }
+    override fun toString():String{
+        return nom +" "+prenom
+    }
+}
+
+class Equipe(var EqNom:String ,var EqNat:String ,var coach:Coach ,var lstJrs :MutableList<Joueur>){
+    fun afficherEqInfos():String{
+        return "Nom d'equipe :$EqNom \nNationalite d'equipe :$EqNat \nCoach :$coach \nListe des joueurs :$lstJrs"
+    }
+    fun ajouterJoueur(J :Joueur){
+        for(i in 0 until lstJrs.size){
+            if(lstJrs[i].numero ==J.numero){
+                println("Numero deja existe")
+                break
+            }
+        }
+        lstJrs.add(J)
+
+        
+    }
+    fun supprimerJoueur(J :Joueur){
+        lstJrs.remove(J)
+    }
+    fun afficherNbrJoueur():String{
+        var total =0
+        for(i in 0 until lstJrs.size){
+            total+=1
+        }
+        return "Nombres des joueurs :$total"
+    }
+    fun afficherJoueurParNum(N :Int){
+        for(i in 0 until lstJrs.size){
+            if(N ==lstJrs[i].numero){
+                println("Joueur trouve !")
+                println("Les informations :")
+                println(lstJrs[i].afficherJoueurInfos())
+                println()
+                break
+            }
+            else{
+                println("Joueur pas trouve !")
+                println()
+                break
+            }
+        }       
+    }
+
+}
+
+
+
+
+
+
